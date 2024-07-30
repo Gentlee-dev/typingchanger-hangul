@@ -67,5 +67,5 @@ console.log(modifiedText); // { dkssudgktpdy : '안녕하세요', ㅗㅑ : 'hi'}
 - lol
 
 ## License
-This project is licensed under the MIT License.
+이 프로젝트는 MIT 라이선스입니다. 자유롭게 사용해주세요.
 
