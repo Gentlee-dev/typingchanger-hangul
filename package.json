@@ -1,0 +1,21 @@
+{
+  "name": "typingchanger-hangul",
+  "version": "1.0.0",
+  "description": "한영키를 잊었을때를 위한<br>\r 한글 => 영어, 영어 => 한글 변경<br>\r 두벌식 기준<br>",
+  "main": "./dist/src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2"
+  }
+}
