@@ -71,7 +71,6 @@ export const KR_TO_EN: { [idx: string]: string } = {
   ㅉ: "W",
 };
 const EXCEPT_WORDS = ["ㅋㅋ", "ㅎㅎ", "lol"];
-const isExceptWord = (word: string) => EXCEPT_WORDS.indexOf(word) !== -1;
 const getIsCompleteKrWord = (word: string) =>
   word.split("").every((spell) => isCompleteHangul(spell.charCodeAt(0)));
 const checkWordLanguage = (word: string) => {
@@ -107,27 +106,29 @@ const krToEn = (word: string) => {
   return convertedWord;
 };
 
-const forgotConvert = (text: string) => {
+const forgotConvert = (text: string, exceptArray: string[] = []) => {
   const words = text.split(" ");
   const answer: { [idx: string]: string } = {};
 
   for (const word of words) {
-    if (isExceptWord(word)) continue;
+    if ([...EXCEPT_WORDS, ...exceptArray].indexOf(word) !== -1) continue; // 예외단어 제외
     const wordCountry = checkWordLanguage(word);
-    if (wordCountry === "mix" || wordCountry === "other") continue;
+    if (wordCountry === "mix" || wordCountry === "other") continue; // 한영이외 및 한영조합 제외
 
+    // 영어인 경우
     if (wordCountry === "en") {
       const convertedKr = enToKr(word); // 일단 한국어 변환
       if (!getIsCompleteKrWord(convertedKr)) continue; // 완성된 한글이 아니면 중단
       answer[word] = convertedKr; // 리턴객체에 삽입
     }
+
+    // 한글인 경우
     if (wordCountry === "kr") {
       if (getIsCompleteKrWord(word)) continue; // 완성된 한글이면 중단
       const kr = krToEn(word); // 영어로 변환
       answer[word] = kr; // 리턴 객체에 삽입
     }
   }
-  console.log(answer);
   return answer;
 };
 
