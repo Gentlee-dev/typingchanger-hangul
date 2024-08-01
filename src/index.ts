@@ -1,81 +1,83 @@
-import { assemble } from "./com.js";
+const EN_TO_KR = {
+  a: "ㅁ",
+  b: "ㅠ",
+  c: "ㅊ",
+  d: "ㅇ",
+  e: "ㄷ",
+  f: "ㄹ",
+  g: "ㅎ",
+  h: "ㅗ",
+  i: "ㅑ",
+  j: "ㅓ",
+  k: "ㅏ",
+  l: "ㅣ",
+  m: "ㅡ",
+  n: "ㅜ",
+  o: "ㅐ",
+  p: "ㅔ",
+  q: "ㅂ",
+  r: "ㄱ",
+  s: "ㄴ",
+  t: "ㅅ",
+  u: "ㅕ",
+  v: "ㅍ",
+  w: "ㅈ",
+  x: "ㅌ",
+  y: "ㅛ",
+  z: "ㅋ",
+  E: "ㄸ",
+  O: "ㅒ",
+  P: "ㅖ",
+  Q: "ㅃ",
+  R: "ㄲ",
+  T: "ㅆ",
+  W: "ㅉ",
+};
+const KR_TO_EN = {
+  ㅁ: "a",
+  ㅠ: "b",
+  ㅊ: "c",
+  ㅇ: "d",
+  ㄷ: "e",
+  ㄹ: "f",
+  ㅎ: "g",
+  ㅗ: "h",
+  ㅑ: "i",
+  ㅓ: "j",
+  ㅏ: "k",
+  ㅣ: "l",
+  ㅡ: "m",
+  ㅜ: "n",
+  ㅐ: "o",
+  ㅔ: "p",
+  ㅂ: "q",
+  ㄱ: "r",
+  ㄴ: "s",
+  ㅅ: "t",
+  ㅕ: "u",
+  ㅍ: "v",
+  ㅈ: "w",
+  ㅌ: "x",
+  ㅛ: "y",
+  ㅋ: "z",
+  ㄸ: "E",
+  ㅒ: "O",
+  ㅖ: "P",
+  ㅃ: "Q",
+  ㄲ: "R",
+  ㅆ: "T",
+  ㅉ: "W",
+};
 
-console.log(assemble(["ㄱ", "ㅏ", "ㄴ", "ㅏ", "ㄷ", "ㅏ"]));
-console.log(assemble(["ㅂ", "ㅣ", "ㅎ", "ㅐ", "ㅇ"]));
-console.log(assemble(["ㅆ", "ㅡ", "ㄹ", "ㄷ", "ㅏ"]));
-console.log(assemble(["ㅇ", "ㅡ", "ㅣ", "ㅅ", "ㅏ"]));
-console.log(assemble(["ㅉ", "ㅏ", "ㄹ", "ㅂ", "ㅇ", "ㅡ", "ㄴ"]));
-console.log(assemble(["ㄷ", "ㅏ", "ㄹ", "ㄱ", "ㄱ", "ㅗ", "ㄱ", "ㅣ"]));
-console.log(assemble(["ㅇ", "ㅗ", "ㅌ", "ㅏ"]));
-console.log(
-  assemble([
-    "A",
-    "B",
-    "ㅅ",
-    "ㅏ",
-    "ㄹ",
-    "ㄱ",
-    "e",
-    "$",
-    "@",
-    "%",
-    "2",
-    "3",
-    "2",
-    "4",
-    "s",
-    "d",
-    "f",
-    "ㄲ",
-    "ㅣ",
-    "ㄹ",
-    "ㅋ",
-    "ㅏ",
-    "ㅋ",
-    "ㅋ",
-    "ㅋ",
-    "ㅋ",
-    "ㅋ",
-  ])
-);
-console.log(
-  assemble([
-    "ㅂ",
-    "ㅜ",
-    "ㅔ",
-    "ㄹ",
-    "ㄱ",
-    "ㄱ",
-    "ㅜ",
-    "ㅔ",
-    "ㄹ",
-    "ㄹ",
-    "ㅡ",
-    "ㅣ",
-    "ㅍ",
-    "ㅉ",
-    "ㅡ",
-    "ㅣ",
-    "ㄹ",
-    "ㅂ",
-    "ㅌ",
-    "ㅜ",
-    "ㅣ",
-    "ㄹ",
-    "ㅂ",
-  ])
-);
-console.log(assemble(["ㄱ", "ㅅ"]));
-console.log(assemble(["ㅗ", "ㅐ"]));
-console.log(assemble(["ㅈ", "ㅅ", "ㅏ"]));
-console.log(assemble(["ㄱ", "ㅅ", "ㄱ", "ㅅ"]));
-console.log(assemble(["ㅗ", "ㅐ", "ㅗ", "ㅐ"]));
-console.log(assemble(["ㅈ", "ㅗ", "ㅗ", "ㅐ"]));
-console.log(assemble(["ㅣ", "ㅗ", "ㅐ"]));
-console.log(assemble(["ㅃ", "ㅉ", "ㅏ", "ㄸ"]));
-console.log(assemble(["ㅒ", "ㅗ", "ㅒ"]));
-console.log(assemble(["ㅃ", "ㅞ", "ㄹ", "ㄱ", "ㅅ"]));
-console.log(assemble(["ㅃ", "ㅞ", "ㄹ", "ㄱ", "ㅏ"]));
-console.log(
-  assemble(["ㅃ", "ㄹ", "ㄱ", "ㅞ", "ㄹ", "ㄱ", "ㅞ", "ㄹ", "ㄱ", "ㅂ"])
-);
+const p = "dkssud so dlfmadms h dlwdjwdndldi";
+
+const forgotConvert = (text: string) => {
+  const words = text.split(" ");
+  console.log(words);
+  for (let word of words) {
+    if (word.length <= 1) continue;
+    console.log(word, word.length);
+  }
+};
+
+forgotConvert(p);
