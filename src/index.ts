@@ -68,15 +68,16 @@ const KR_TO_EN = {
   ㅆ: "T",
   ㅉ: "W",
 };
+const EXCEPT_WORDS = ["ㅋㅋ", "ㅎㅎ", "lol"];
+const isExceptWord = (word: string) => EXCEPT_WORDS.indexOf(word) !== -1;
 
-const p = "dkssud so dlfmadms h dlwdjwdndldi";
+const p = "dkssud so dlfmadms dlwdjwdndldi lol";
 
 const forgotConvert = (text: string) => {
   const words = text.split(" ");
-  console.log(words);
   for (let word of words) {
-    if (word.length <= 1) continue;
-    console.log(word, word.length);
+    if (isExceptWord(word)) continue;
+    console.log(word);
   }
 };
 
