@@ -1,3 +1,5 @@
+import { assemble, disassemble, isCompleteHangul } from "./com.js";
+
 export const EN_TO_KR: { [idx: string]: string } = {
   a: "ㅁ",
   b: "ㅠ",
@@ -33,7 +35,7 @@ export const EN_TO_KR: { [idx: string]: string } = {
   T: "ㅆ",
   W: "ㅉ",
 };
-export const KR_TO_EN = {
+export const KR_TO_EN: { [idx: string]: string } = {
   ㅁ: "a",
   ㅠ: "b",
   ㅊ: "c",
@@ -70,6 +72,8 @@ export const KR_TO_EN = {
 };
 const EXCEPT_WORDS = ["ㅋㅋ", "ㅎㅎ", "lol"];
 const isExceptWord = (word: string) => EXCEPT_WORDS.indexOf(word) !== -1;
+const getIsCompleteKrWord = (word: string) =>
+  word.split("").every((spell) => isCompleteHangul(spell.charCodeAt(0)));
 const checkWordLanguage = (word: string) => {
   const koreanRegex = /^[가-힣ㄱ-ㅎㅏ-ㅣ]+$/;
   const englishRegex = /^[a-zA-Z]+$/;
@@ -87,18 +91,44 @@ const checkWordLanguage = (word: string) => {
   return "other";
 };
 
-const p = "dkssud so dlfmadms dlwjdwnddldi lol";
+const enToKr = (word: string) => {
+  let convertedWord = "";
+  for (const spell of word) {
+    convertedWord += EN_TO_KR[spell];
+  }
+  return assemble(convertedWord.split(""));
+};
+const krToEn = (word: string) => {
+  let convertedWord = "";
+  const convertedKrList = disassemble(word);
+  for (const spell of convertedKrList) {
+    convertedWord += KR_TO_EN[spell];
+  }
+  return convertedWord;
+};
 
 const forgotConvert = (text: string) => {
   const words = text.split(" ");
   const answer: { [idx: string]: string } = {};
+
   for (const word of words) {
     if (isExceptWord(word)) continue;
     const wordCountry = checkWordLanguage(word);
     if (wordCountry === "mix" || wordCountry === "other") continue;
+
+    if (wordCountry === "en") {
+      const convertedKr = enToKr(word); // 일단 한국어 변환
+      if (!getIsCompleteKrWord(convertedKr)) continue; // 완성된 한글이 아니면 중단
+      answer[word] = convertedKr; // 리턴객체에 삽입
+    }
+    if (wordCountry === "kr") {
+      if (getIsCompleteKrWord(word)) continue; // 완성된 한글이면 중단
+      const kr = krToEn(word); // 영어로 변환
+      answer[word] = kr; // 리턴 객체에 삽입
+    }
   }
   console.log(answer);
   return answer;
 };
 
-forgotConvert(p);
+export default forgotConvert;
