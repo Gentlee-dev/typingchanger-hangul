@@ -208,8 +208,7 @@ const CHO = [
     ["ㅜ", "ㅣ", "ㅟ"],
     ["ㅡ", "ㅣ", "ㅢ"],
   ];
-const isHangul = (uniCode: number) =>
-  HANGUL_START <= uniCode && uniCode <= HANGUL_END;
+
 const isCho = (uniCode: number) => typeof CHO_HASH[uniCode] !== "undefined";
 const isJung = (uniCode: number) => typeof JUNG_HASH[uniCode] !== "undefined";
 const isJong = (uniCode: number) => {
@@ -259,6 +258,8 @@ const COMPLEX_VOWELS_HASH = makeComplexHash(COMPLEX_VOWELS);
 const _isConsonant = (uniCode: number) => {
   return typeof CONSONANTS_HASH[uniCode] !== "undefined";
 };
+export const isCompleteHangul = (uniCode: number) =>
+  HANGUL_START <= uniCode && uniCode <= HANGUL_END;
 
 export const disassemble = (string: string) => {
   /* 입력값이 NULL일 경우 에러 발생 */
@@ -280,7 +281,7 @@ export const disassemble = (string: string) => {
 
     code = string.charCodeAt(i); //문자를 유니코드값으로 변환해 code에 저장
     /* i번째 문자(code)가 완성된 한글인 경우 */
-    if (isHangul(code)) {
+    if (isCompleteHangul(code)) {
       code -= HANGUL_START;
       jong = code % 28;
       jung = ((code - jong) / 28) % 21;

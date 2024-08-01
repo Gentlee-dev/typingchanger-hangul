@@ -1,81 +1,134 @@
-import { assemble } from "./com.js";
+import { assemble, disassemble, isCompleteHangul } from "./com.js";
 
-console.log(assemble(["ㄱ", "ㅏ", "ㄴ", "ㅏ", "ㄷ", "ㅏ"]));
-console.log(assemble(["ㅂ", "ㅣ", "ㅎ", "ㅐ", "ㅇ"]));
-console.log(assemble(["ㅆ", "ㅡ", "ㄹ", "ㄷ", "ㅏ"]));
-console.log(assemble(["ㅇ", "ㅡ", "ㅣ", "ㅅ", "ㅏ"]));
-console.log(assemble(["ㅉ", "ㅏ", "ㄹ", "ㅂ", "ㅇ", "ㅡ", "ㄴ"]));
-console.log(assemble(["ㄷ", "ㅏ", "ㄹ", "ㄱ", "ㄱ", "ㅗ", "ㄱ", "ㅣ"]));
-console.log(assemble(["ㅇ", "ㅗ", "ㅌ", "ㅏ"]));
-console.log(
-  assemble([
-    "A",
-    "B",
-    "ㅅ",
-    "ㅏ",
-    "ㄹ",
-    "ㄱ",
-    "e",
-    "$",
-    "@",
-    "%",
-    "2",
-    "3",
-    "2",
-    "4",
-    "s",
-    "d",
-    "f",
-    "ㄲ",
-    "ㅣ",
-    "ㄹ",
-    "ㅋ",
-    "ㅏ",
-    "ㅋ",
-    "ㅋ",
-    "ㅋ",
-    "ㅋ",
-    "ㅋ",
-  ])
-);
-console.log(
-  assemble([
-    "ㅂ",
-    "ㅜ",
-    "ㅔ",
-    "ㄹ",
-    "ㄱ",
-    "ㄱ",
-    "ㅜ",
-    "ㅔ",
-    "ㄹ",
-    "ㄹ",
-    "ㅡ",
-    "ㅣ",
-    "ㅍ",
-    "ㅉ",
-    "ㅡ",
-    "ㅣ",
-    "ㄹ",
-    "ㅂ",
-    "ㅌ",
-    "ㅜ",
-    "ㅣ",
-    "ㄹ",
-    "ㅂ",
-  ])
-);
-console.log(assemble(["ㄱ", "ㅅ"]));
-console.log(assemble(["ㅗ", "ㅐ"]));
-console.log(assemble(["ㅈ", "ㅅ", "ㅏ"]));
-console.log(assemble(["ㄱ", "ㅅ", "ㄱ", "ㅅ"]));
-console.log(assemble(["ㅗ", "ㅐ", "ㅗ", "ㅐ"]));
-console.log(assemble(["ㅈ", "ㅗ", "ㅗ", "ㅐ"]));
-console.log(assemble(["ㅣ", "ㅗ", "ㅐ"]));
-console.log(assemble(["ㅃ", "ㅉ", "ㅏ", "ㄸ"]));
-console.log(assemble(["ㅒ", "ㅗ", "ㅒ"]));
-console.log(assemble(["ㅃ", "ㅞ", "ㄹ", "ㄱ", "ㅅ"]));
-console.log(assemble(["ㅃ", "ㅞ", "ㄹ", "ㄱ", "ㅏ"]));
-console.log(
-  assemble(["ㅃ", "ㄹ", "ㄱ", "ㅞ", "ㄹ", "ㄱ", "ㅞ", "ㄹ", "ㄱ", "ㅂ"])
-);
+export const EN_TO_KR: { [idx: string]: string } = {
+  a: "ㅁ",
+  b: "ㅠ",
+  c: "ㅊ",
+  d: "ㅇ",
+  e: "ㄷ",
+  f: "ㄹ",
+  g: "ㅎ",
+  h: "ㅗ",
+  i: "ㅑ",
+  j: "ㅓ",
+  k: "ㅏ",
+  l: "ㅣ",
+  m: "ㅡ",
+  n: "ㅜ",
+  o: "ㅐ",
+  p: "ㅔ",
+  q: "ㅂ",
+  r: "ㄱ",
+  s: "ㄴ",
+  t: "ㅅ",
+  u: "ㅕ",
+  v: "ㅍ",
+  w: "ㅈ",
+  x: "ㅌ",
+  y: "ㅛ",
+  z: "ㅋ",
+  E: "ㄸ",
+  O: "ㅒ",
+  P: "ㅖ",
+  Q: "ㅃ",
+  R: "ㄲ",
+  T: "ㅆ",
+  W: "ㅉ",
+};
+export const KR_TO_EN: { [idx: string]: string } = {
+  ㅁ: "a",
+  ㅠ: "b",
+  ㅊ: "c",
+  ㅇ: "d",
+  ㄷ: "e",
+  ㄹ: "f",
+  ㅎ: "g",
+  ㅗ: "h",
+  ㅑ: "i",
+  ㅓ: "j",
+  ㅏ: "k",
+  ㅣ: "l",
+  ㅡ: "m",
+  ㅜ: "n",
+  ㅐ: "o",
+  ㅔ: "p",
+  ㅂ: "q",
+  ㄱ: "r",
+  ㄴ: "s",
+  ㅅ: "t",
+  ㅕ: "u",
+  ㅍ: "v",
+  ㅈ: "w",
+  ㅌ: "x",
+  ㅛ: "y",
+  ㅋ: "z",
+  ㄸ: "E",
+  ㅒ: "O",
+  ㅖ: "P",
+  ㅃ: "Q",
+  ㄲ: "R",
+  ㅆ: "T",
+  ㅉ: "W",
+};
+const EXCEPT_WORDS = ["ㅋㅋ", "ㅎㅎ", "lol"];
+const isExceptWord = (word: string) => EXCEPT_WORDS.indexOf(word) !== -1;
+const getIsCompleteKrWord = (word: string) =>
+  word.split("").every((spell) => isCompleteHangul(spell.charCodeAt(0)));
+const checkWordLanguage = (word: string) => {
+  const koreanRegex = /^[가-힣ㄱ-ㅎㅏ-ㅣ]+$/;
+  const englishRegex = /^[a-zA-Z]+$/;
+  const mixedRegex = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z]+$/;
+
+  if (koreanRegex.test(word)) {
+    return "kr";
+  }
+  if (englishRegex.test(word)) {
+    return "en";
+  }
+  if (mixedRegex.test(word)) {
+    return "mix";
+  }
+  return "other";
+};
+
+const enToKr = (word: string) => {
+  let convertedWord = "";
+  for (const spell of word) {
+    convertedWord += EN_TO_KR[spell];
+  }
+  return assemble(convertedWord.split(""));
+};
+const krToEn = (word: string) => {
+  let convertedWord = "";
+  const convertedKrList = disassemble(word);
+  for (const spell of convertedKrList) {
+    convertedWord += KR_TO_EN[spell];
+  }
+  return convertedWord;
+};
+
+const forgotConvert = (text: string) => {
+  const words = text.split(" ");
+  const answer: { [idx: string]: string } = {};
+
+  for (const word of words) {
+    if (isExceptWord(word)) continue;
+    const wordCountry = checkWordLanguage(word);
+    if (wordCountry === "mix" || wordCountry === "other") continue;
+
+    if (wordCountry === "en") {
+      const convertedKr = enToKr(word); // 일단 한국어 변환
+      if (!getIsCompleteKrWord(convertedKr)) continue; // 완성된 한글이 아니면 중단
+      answer[word] = convertedKr; // 리턴객체에 삽입
+    }
+    if (wordCountry === "kr") {
+      if (getIsCompleteKrWord(word)) continue; // 완성된 한글이면 중단
+      const kr = krToEn(word); // 영어로 변환
+      answer[word] = kr; // 리턴 객체에 삽입
+    }
+  }
+  console.log(answer);
+  return answer;
+};
+
+export default forgotConvert;
