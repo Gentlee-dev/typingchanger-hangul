@@ -1,4 +1,5 @@
 import { assemble, disassemble, isCompleteHangul } from "./com.js";
+import { arr } from "./most.js";
 
 export const EN_TO_KR: { [idx: string]: string } = {
   a: "ㅁ",
@@ -27,13 +28,32 @@ export const EN_TO_KR: { [idx: string]: string } = {
   x: "ㅌ",
   y: "ㅛ",
   z: "ㅋ",
+  A: "ㅁ",
+  B: "ㅠ",
+  C: "ㅊ",
+  D: "ㅇ",
   E: "ㄸ",
+  F: "ㄹ",
+  G: "ㅎ",
+  H: "ㅗ",
+  I: "ㅑ",
+  J: "ㅓ",
+  K: "ㅏ",
+  L: "ㅣ",
+  M: "ㅡ",
+  N: "ㅜ",
   O: "ㅒ",
   P: "ㅖ",
   Q: "ㅃ",
   R: "ㄲ",
+  S: "ㄴ",
   T: "ㅆ",
+  U: "ㅕ",
+  V: "ㅍ",
   W: "ㅉ",
+  X: "ㅌ",
+  Y: "ㅛ",
+  Z: "ㅋ",
 };
 export const KR_TO_EN: { [idx: string]: string } = {
   ㅁ: "a",
@@ -129,7 +149,19 @@ const forgotConvert = (text: string, exceptArray: string[] = []) => {
       answer[word] = kr; // 리턴 객체에 삽입
     }
   }
+  console.log(answer);
   return answer;
 };
 
 export default forgotConvert;
+
+let num = 0;
+for (let i in arr) {
+  const kr = enToKr(arr[i]);
+  if (kr.split("").every((spell) => isCompleteHangul(spell.charCodeAt(0)))) {
+    console.log(arr[i], kr);
+    num++;
+  }
+}
+
+console.log(num);
