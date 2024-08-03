@@ -1,5 +1,6 @@
 import { assemble, disassemble, isCompleteHangul } from "./com.js";
-import { arr } from "./most.js";
+import { ALWAYS_CONVERT_KRS, EXCEPT_WORDS } from "./contant.js";
+// import { arr } from "./most.js";
 
 export const EN_TO_KR: { [idx: string]: string } = {
   a: "ㅁ",
@@ -90,7 +91,8 @@ export const KR_TO_EN: { [idx: string]: string } = {
   ㅆ: "T",
   ㅉ: "W",
 };
-const EXCEPT_WORDS = ["ㅋㅋ", "ㅎㅎ", "lol"];
+const getIsAlwaysConvertKr = (word: string) =>
+  ALWAYS_CONVERT_KRS.indexOf(word) !== -1;
 const getIsCompleteKrWord = (word: string) =>
   word.split("").every((spell) => isCompleteHangul(spell.charCodeAt(0)));
 const checkWordLanguage = (word: string) => {
@@ -126,12 +128,12 @@ const krToEn = (word: string) => {
   return convertedWord;
 };
 
-const forgotConvert = (text: string, exceptArray: string[] = []) => {
+const forgotConvert = (text: string, excepts: string[] = []) => {
   const words = text.split(" ");
   const answer: { [idx: string]: string } = {};
-
+  let list = "";
   for (const word of words) {
-    if ([...EXCEPT_WORDS, ...exceptArray].indexOf(word) !== -1) continue; // 예외단어 제외
+    if ([...EXCEPT_WORDS, ...excepts].indexOf(word) !== -1) continue; // 예외단어 제외
     const wordCountry = checkWordLanguage(word);
     if (wordCountry === "mix" || wordCountry === "other") continue; // 한영이외 및 한영조합 제외
 
@@ -144,24 +146,34 @@ const forgotConvert = (text: string, exceptArray: string[] = []) => {
 
     // 한글인 경우
     if (wordCountry === "kr") {
-      if (getIsCompleteKrWord(word)) continue; // 완성된 한글이면 중단
+      if (!getIsAlwaysConvertKr(word) && getIsCompleteKrWord(word)) continue; // 완성된 한글이면 중단
       const kr = krToEn(word); // 영어로 변환
+      list += " " + kr;
+      // console.log(kr);
       answer[word] = kr; // 리턴 객체에 삽입
     }
   }
-  console.log(answer);
+  console.log(list);
+  // console.log(answer);
   return answer;
 };
 
 export default forgotConvert;
 
-let num = 0;
-for (let i in arr) {
-  const kr = enToKr(arr[i]);
-  if (kr.split("").every((spell) => isCompleteHangul(spell.charCodeAt(0)))) {
-    console.log(arr[i], kr);
-    num++;
-  }
-}
+// let num = 0;
+// const list = [];
+// for (let i in arr) {
+//   const kr = enToKr(arr[i]);
+//   if (kr.split("").every((spell) => isCompleteHangul(spell.charCodeAt(0)))) {
+//     console.log(kr, arr[i]);
+//     list.push(kr);
+//     num++;
+//   }
+// }
 
-console.log(num);
+// for (const i of KR_LIST) {
+//   forgotConvert(i);
+//   console.log(
+//     "================================================================"
+//   );
+// }
