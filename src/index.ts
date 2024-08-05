@@ -129,9 +129,11 @@ const krToEn = (word: string) => {
 };
 
 const forgotConvert = (text: string, excepts: string[] = []) => {
-  const words = text.split(" ");
+  const resultString = text.replace(/[.?!,()]/g, "");
+  const words = resultString.split(" ");
   const answer: { [idx: string]: string } = {};
   let list = "";
+
   for (const word of words) {
     if ([...EXCEPT_WORDS, ...excepts].indexOf(word) !== -1) continue; // 예외단어 제외
     const wordCountry = checkWordLanguage(word);
@@ -140,6 +142,7 @@ const forgotConvert = (text: string, excepts: string[] = []) => {
     // 영어인 경우
     if (wordCountry === "en") {
       const convertedKr = enToKr(word); // 일단 한국어 변환
+      list += " " + convertedKr;
       if (!getIsCompleteKrWord(convertedKr)) continue; // 완성된 한글이 아니면 중단
       answer[word] = convertedKr; // 리턴객체에 삽입
     }
@@ -149,11 +152,10 @@ const forgotConvert = (text: string, excepts: string[] = []) => {
       if (!getIsAlwaysConvertKr(word) && getIsCompleteKrWord(word)) continue; // 완성된 한글이면 중단
       const kr = krToEn(word); // 영어로 변환
       list += " " + kr;
-      // console.log(kr);
       answer[word] = kr; // 리턴 객체에 삽입
     }
   }
-  console.log(list);
+  // console.log(list);
   // console.log(answer);
   return answer;
 };
