@@ -455,7 +455,6 @@ export const assemble = (array: string[]) => {
       stage = 0;
       continue;
     }
-    //console.log(stage, array[i]);
     if (stage === 0) {
       // 초성이 올 차례
       if (isCho(code)) {
