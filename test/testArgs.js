@@ -70,6 +70,25 @@ export const test7 = [
     Wkdrn: "짱구",
   },
 ];
+export const test8 = [
+  "다람쥐 헌 쳇바퀴에 xkrhvk => 타고파",
+  forgotConvert("다람쥐 헌 쳇바퀴에 xkrhvk"),
+  {
+    xkrhvk: "타고파",
+  },
+];
+export const test9 = [
+  "dkssud!!!! (akssktj), qksrkdnj. skfkd clsgowlwl dksgdmffo? => 안녕 반나서 반가워 나랑 친해지지 않을래",
+  forgotConvert("dkssud!!!! akssktj qksrkdnj. skfkd clsgowlwl dksgdmffo?"),
+  {
+    dkssud: "안녕",
+    akssktj: "만나서",
+    qksrkdnj: "반가워",
+    skfkd: "나랑",
+    clsgowlwl: "친해지지",
+    dksgdmffo: "않을래",
+  },
+];
 
-const tests = [test1, test2, test3, test4, test5, test6, test7];
+const tests = [test1, test2, test3, test4, test5, test6, test7, test8, test9];
 export default tests;
