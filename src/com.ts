@@ -226,14 +226,14 @@ const isJongJoinable = (a: number, b: number) => {
 };
 const makeHash = (array: string[]) => {
   const length = array.length,
-    hash: { [idx: number]: number } = { 0: 0 };
+    hash: Record<number, number> = { 0: 0 };
   for (let i = 0; i < length; i++) {
     if (array[i]) hash[array[i].charCodeAt(0)] = i;
   }
   return hash;
 };
 const makeComplexHash = (alphabetsList: string[][]) => {
-  let hash: { [idx: number]: { [index: number]: number } } = {};
+  let hash: Record<number, Record<number, number>> = {};
   for (const alphabets of alphabetsList) {
     const code1 = alphabets[0].charCodeAt(0);
     const code2 = alphabets[1].charCodeAt(0);

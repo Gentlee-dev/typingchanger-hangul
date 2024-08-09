@@ -56,7 +56,7 @@ const forgotConvert = (
 ) => {
   const resultString = text.replace(/[.?!,()]/g, ""); // 특문 제거
   const words = resultString.split(" ");
-  const answer: { [idx: string]: string } = {};
+  const answer: Record<string, string> = {};
 
   for (const word of words) {
     if ([...EXCEPT_WORDS, ...excepts].indexOf(word) !== -1) continue; // 예외단어 제외

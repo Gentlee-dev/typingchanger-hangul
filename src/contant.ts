@@ -163,7 +163,7 @@ export const ALWAYS_CONVERT_KRS = [
   "무챠둣",
   "채",
 ];
-export const EN_TO_KR: { [idx: string]: string } = {
+export const EN_TO_KR: Record<string, string> = {
   a: "ㅁ",
   b: "ㅠ",
   c: "ㅊ",
@@ -217,7 +217,7 @@ export const EN_TO_KR: { [idx: string]: string } = {
   Y: "ㅛ",
   Z: "ㅋ",
 };
-export const KR_TO_EN: { [idx: string]: string } = {
+export const KR_TO_EN: Record<string, string> = {
   ㅁ: "a",
   ㅠ: "b",
   ㅊ: "c",
