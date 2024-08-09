@@ -1,4 +1,4 @@
-import forgotConvert from "../dist/index.js";
+import forgotConvert from "../src/index.ts";
 
 export const test1 = [
   "dkssudgktpdy => 안녕하세요",
