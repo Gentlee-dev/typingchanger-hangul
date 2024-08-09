@@ -7,14 +7,13 @@
   "scripts": {
     "test": "npx tsx --test",
     "test-watch": "npx tsx --test --watch",
-    "build": "tsc --build -w"
+    "build": "tsc --build",
+    "build-watch": "tsc --build -w"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.4",
-    "ts-node": "^10.9.2",
     "tsx": "^4.17.0",
     "typescript": "^5.5.4"
   }

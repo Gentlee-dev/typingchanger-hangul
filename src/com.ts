@@ -226,24 +226,21 @@ const isJongJoinable = (a: number, b: number) => {
 };
 const makeHash = (array: string[]) => {
   const length = array.length,
-    hash: { [idx: number]: number } = { 0: 0 };
+    hash: Record<number, number> = { 0: 0 };
   for (let i = 0; i < length; i++) {
     if (array[i]) hash[array[i].charCodeAt(0)] = i;
   }
   return hash;
 };
-const makeComplexHash = (array: string[][]) => {
-  const length = array.length;
-  let hash: { [idx: number]: { [index: number]: number } } = {},
-    code1,
-    code2;
-  for (let i = 0; i < length; i++) {
-    code1 = array[i][0].charCodeAt(0);
-    code2 = array[i][1].charCodeAt(0);
+const makeComplexHash = (alphabetsList: string[][]) => {
+  let hash: Record<number, Record<number, number>> = {};
+  for (const alphabets of alphabetsList) {
+    const code1 = alphabets[0].charCodeAt(0);
+    const code2 = alphabets[1].charCodeAt(0);
     if (typeof hash[code1] === "undefined") {
       hash[code1] = {};
     }
-    hash[code1][code2] = array[i][2].charCodeAt(0);
+    hash[code1][code2] = alphabets[2].charCodeAt(0);
   }
   return hash;
 };
@@ -262,10 +259,6 @@ export const isCompleteHangul = (uniCode: number) =>
   HANGUL_START <= uniCode && uniCode <= HANGUL_END;
 
 export const disassemble = (string: string) => {
-  /* 입력값이 NULL일 경우 에러 발생 */
-  if (string === null) {
-    throw new Error("Arguments cannot be null");
-  }
   /* 입력값이 'object' 타입인 경우 문자열로 병합 */
 
   let result: string[] = [],
