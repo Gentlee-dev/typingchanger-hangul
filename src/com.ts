@@ -232,18 +232,15 @@ const makeHash = (array: string[]) => {
   }
   return hash;
 };
-const makeComplexHash = (array: string[][]) => {
-  const length = array.length;
-  let hash: { [idx: number]: { [index: number]: number } } = {},
-    code1,
-    code2;
-  for (let i = 0; i < length; i++) {
-    code1 = array[i][0].charCodeAt(0);
-    code2 = array[i][1].charCodeAt(0);
+const makeComplexHash = (alphabetsList: string[][]) => {
+  let hash: { [idx: number]: { [index: number]: number } } = {};
+  for (const alphabets of alphabetsList) {
+    const code1 = alphabets[0].charCodeAt(0);
+    const code2 = alphabets[1].charCodeAt(0);
     if (typeof hash[code1] === "undefined") {
       hash[code1] = {};
     }
-    hash[code1][code2] = array[i][2].charCodeAt(0);
+    hash[code1][code2] = alphabets[2].charCodeAt(0);
   }
   return hash;
 };
