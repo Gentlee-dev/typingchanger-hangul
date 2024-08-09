@@ -7,7 +7,8 @@
   "scripts": {
     "test": "npx tsx --test",
     "test-watch": "npx tsx --test --watch",
-    "build": "tsc --build -w"
+    "build": "tsc --build",
+    "build-watch": "tsc --build -w"
   },
   "keywords": [],
   "author": "",
