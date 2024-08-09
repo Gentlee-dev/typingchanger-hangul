@@ -6,8 +6,8 @@ import {
   KR_TO_EN,
 } from "./contant.js";
 
-const getIsAlwaysConvertKr = (word: string) =>
-  ALWAYS_CONVERT_KRS.indexOf(word) !== -1;
+const getIsAlwaysConvertKr = (word: string, alwaysConvertList: string[]) =>
+  [...ALWAYS_CONVERT_KRS, ...alwaysConvertList].indexOf(word) !== -1;
 const getIsCompleteKrWord = (word: string) => /^[가-힣]+$/.test(word);
 const checkWordLanguage = (word: string) => {
   const koreanRegex = /^[가-힣ㄱ-ㅎㅏ-ㅣ]+$/;
@@ -42,7 +42,11 @@ const krToEn = (word: string) => {
   return convertedWord;
 };
 
-const forgotConvert = (text: string, excepts: string[] = []) => {
+const forgotConvert = (
+  text: string,
+  excepts: string[] = [],
+  alwaysConvertList: string[] = []
+) => {
   const resultString = text.replace(/[.?!,()]/g, ""); // 특문 제거
   const words = resultString.split(" ");
   const answer: { [idx: string]: string } = {};
@@ -61,7 +65,11 @@ const forgotConvert = (text: string, excepts: string[] = []) => {
 
     // 한글인 경우
     if (wordCountry === "kr") {
-      if (!getIsAlwaysConvertKr(word) && getIsCompleteKrWord(word)) continue; // 필수번역단어가 아니거나 완성된 한글이면 중단
+      if (
+        !getIsAlwaysConvertKr(word, alwaysConvertList) &&
+        getIsCompleteKrWord(word)
+      )
+        continue; // 필수번역단어가 아니거나 완성된 한글이면 중단
       const kr = krToEn(word); // 영어로 변환
       answer[word] = kr; // 리턴 객체에 삽입
     }
