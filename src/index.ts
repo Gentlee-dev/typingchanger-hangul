@@ -42,6 +42,33 @@ const krToEn = (word: string) => {
   return convertedWord;
 };
 
+const convertWord = (word: string, alwaysConvertList: string[]): string => {
+  const wordCountry = checkWordLanguage(word); // 단어의 언어타입
+
+  // 영어인 경우
+  if (wordCountry === "en") {
+    const convertedKr = enToKr(word); // 일단 한국어 변환
+
+    // 자모음이 완벽한 경우 반환
+    if (getIsCompleteKrWord(convertedKr)) {
+      return convertedKr;
+    }
+  }
+
+  // 한글인 경우
+  if (wordCountry === "kr") {
+    // 필수번역단어 또는 자모음이 완벽하지 않은 경우 반환
+    if (
+      getIsAlwaysConvertKr(word, alwaysConvertList) ||
+      !getIsCompleteKrWord(word)
+    ) {
+      return krToEn(word);
+    }
+  }
+
+  return "";
+};
+
 /**
  * 두벌식 키보드 기준 한<->영 변환 가능한 부분을 찾아 반환해주는 함수
  * @param {string} text 변환될 단어를 찾을 문자열
@@ -60,26 +87,9 @@ const forgotConvert = (
 
   for (const word of words) {
     if ([...EXCEPT_WORDS, ...excepts].indexOf(word) !== -1) continue; // 예외단어 제외
-    const wordCountry = checkWordLanguage(word);
-    if (wordCountry === "mix" || wordCountry === "other") continue; // 한영이외 및 한영조합 제외
 
-    // 영어인 경우
-    if (wordCountry === "en") {
-      const convertedKr = enToKr(word); // 일단 한국어 변환
-      if (!getIsCompleteKrWord(convertedKr)) continue; // 완성된 한글이 아니면 중단
-      answer[word] = convertedKr; // 리턴객체에 삽입
-    }
-
-    // 한글인 경우
-    if (wordCountry === "kr") {
-      if (
-        !getIsAlwaysConvertKr(word, alwaysConvertList) &&
-        getIsCompleteKrWord(word)
-      )
-        continue; // 필수번역단어가 아니거나 완성된 한글이면 중단
-      const kr = krToEn(word); // 영어로 변환
-      answer[word] = kr; // 리턴 객체에 삽입
-    }
+    const convertedWord = convertWord(word, alwaysConvertList);
+    if (convertedWord !== "") answer[word] = convertedWord; // 리턴 객체에 삽입
   }
   return answer;
 };
