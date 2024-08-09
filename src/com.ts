@@ -262,10 +262,6 @@ export const isCompleteHangul = (uniCode: number) =>
   HANGUL_START <= uniCode && uniCode <= HANGUL_END;
 
 export const disassemble = (string: string) => {
-  /* 입력값이 NULL일 경우 에러 발생 */
-  if (string === null) {
-    throw new Error("Arguments cannot be null");
-  }
   /* 입력값이 'object' 타입인 경우 문자열로 병합 */
 
   let result: string[] = [],
