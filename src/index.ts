@@ -42,6 +42,13 @@ const krToEn = (word: string) => {
   return convertedWord;
 };
 
+/**
+ * 두벌식 키보드 기준 한<->영 변환 가능한 부분을 찾아 반환해주는 함수
+ * @param {string} text 변환될 단어를 찾을 문자열
+ * @param {number} excepts 변환하지 않을 string배열, 기본제공된 리스트가 있으며 추가하시고자 하는 단어를 입력해주세요
+ * @param {number} alwaysList 무조건 변환할 string배열, 기본제공된 리스트가 있으며 추가하시고자 하는 단어를 입력해주세요
+ * @returns 객체를 반환합니다. 변환가능한 단어가 key로, 제안단어가 value로 제공됩니다.
+ */
 const forgotConvert = (
   text: string,
   excepts: string[] = [],
