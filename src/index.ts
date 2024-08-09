@@ -26,21 +26,13 @@ const checkWordLanguage = (word: string) => {
   return "other";
 };
 
-const enToKr = (word: string) => {
-  let convertedWord = "";
-  for (const spell of word) {
-    convertedWord += EN_TO_KR[spell];
-  }
-  return assemble(convertedWord.split(""));
-};
-const krToEn = (word: string) => {
-  let convertedWord = "";
-  const convertedKrList = disassemble(word);
-  for (const spell of convertedKrList) {
-    convertedWord += KR_TO_EN[spell];
-  }
-  return convertedWord;
-};
+const enToKr = (ENWord: string) =>
+  assemble(ENWord.split("").map((ENAlphabet) => EN_TO_KR[ENAlphabet]));
+
+const krToEn = (KRWord: string) =>
+  disassemble(KRWord)
+    .map((KRAlphabet) => KR_TO_EN[KRAlphabet])
+    .join("");
 
 const convertWord = (word: string, alwaysConvertList: string[]): string => {
   const wordCountry = checkWordLanguage(word); // 단어의 언어타입
