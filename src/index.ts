@@ -1,4 +1,4 @@
-import { assemble, disassemble, isCompleteHangul } from "./com.js";
+import { assemble, disassemble } from "./com.js";
 import {
   ALWAYS_CONVERT_KRS,
   EN_TO_KR,
@@ -8,8 +8,7 @@ import {
 
 const getIsAlwaysConvertKr = (word: string) =>
   ALWAYS_CONVERT_KRS.indexOf(word) !== -1;
-const getIsCompleteKrWord = (word: string) =>
-  word.split("").every((spell) => isCompleteHangul(spell.charCodeAt(0)));
+const getIsCompleteKrWord = (word: string) => /^[가-힣]+$/.test(word);
 const checkWordLanguage = (word: string) => {
   const koreanRegex = /^[가-힣ㄱ-ㅎㅏ-ㅣ]+$/;
   const englishRegex = /^[a-zA-Z]+$/;
