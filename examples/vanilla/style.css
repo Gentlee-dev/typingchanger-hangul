@@ -1,0 +1,23 @@
+#wrap{
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+section{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.suggest{
+    border: 1px solid #000;
+    width: 30%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+textarea{
+    width: 70%;
+    resize: none;
+}

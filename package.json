@@ -2,20 +2,26 @@
   "name": "typingchanger-hangul",
   "version": "1.0.0",
   "description": "한영키를 잊었을때를 위한<br>\r 한글 => 영어, 영어 => 한글 변경<br>\r 두벌식 기준<br>",
-  "main": "./dist/src/index.js",
+  "main": "./dist/index.js",
   "type": "module",
   "scripts": {
-    "test": "node test/test.js",
-    "build": "tsc --build -w"
+    "test": "npx tsx --test",
+    "test-watch": "npx tsx --test --watch",
+    "build": "tsc --build",
+    "build-watch": "tsc --build -w"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "typescript": "^5.5.4"
+  "author": {
+    "name": "gentlee",
+    "email": "gentlee.dev@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gentlee-dev/typingchanger-hangul"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4",
-    "ts-node": "^10.9.2"
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.4"
   }
 }
