@@ -8,7 +8,7 @@ import {
 
 const getIsAlwaysConvertKr = (word: string, alwaysConvertList: string[]) =>
   [...ALWAYS_CONVERT_KRS, ...alwaysConvertList].indexOf(word) !== -1;
-const getIsCompleteKrWord = (word: string) => /^[가-힣]+$/.test(word);
+const isCompleteKrWord = (word: string) => /^[가-힣]+$/.test(word);
 const checkWordLanguage = (word: string) => {
   const koreanRegex = /^[가-힣ㄱ-ㅎㅏ-ㅣ]+$/;
   const englishRegex = /^[a-zA-Z]+$/;
@@ -50,7 +50,7 @@ const convertWord = (word: string, alwaysConvertList: string[]): string => {
     const convertedKr = enToKr(word); // 일단 한국어 변환
 
     // 자모음이 완벽한 경우 반환
-    if (getIsCompleteKrWord(convertedKr)) {
+    if (isCompleteKrWord(convertedKr)) {
       return convertedKr;
     }
   }
@@ -60,7 +60,7 @@ const convertWord = (word: string, alwaysConvertList: string[]): string => {
     // 필수번역단어 또는 자모음이 완벽하지 않은 경우 반환
     if (
       getIsAlwaysConvertKr(word, alwaysConvertList) ||
-      !getIsCompleteKrWord(word)
+      !isCompleteKrWord(word)
     ) {
       return krToEn(word);
     }
