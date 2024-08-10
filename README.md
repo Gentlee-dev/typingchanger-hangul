@@ -35,7 +35,7 @@ import typingChangerHangul from 'typingchanger-hangul';
 ## 사용법
 ### 구문
 ```
-typingChangerHangul(text,excepts); 
+typingChangerHangul(text,excepts,alwaysConvertList); 
 ```
 ### 매개변수
 #### text - 필수
@@ -45,7 +45,16 @@ typingChangerHangul(text,excepts);
 #### excepts - 옵션
 타입 : string[]<br>
 기본값 : []<br>
-설명 : 수정시 제외될 단어들입니다.
+설명 : 변환시 제외될 단어들입니다.
+자모음 조합이 완벽하더라도 변환하고 싶지 않은 영단어 또는 자모음 조합이 완벽하지 않아도 변환하고싶지 않은 한글단어 모음입니다.
+기본제공되는 단어들이 있으며
+추가로 적용하고자하는 단어를 입력해주시면 됩니다.
+
+#### alwaysConvertList - 옵션
+타입 : string[]<br>
+기본값 : []<br>
+설명 : 항상 변환될 한글단어입니다.
+자모음 조합이 완벽하더라도 영어로 변환되어야하는 단어들 모음입니다.
 기본제공되는 단어들이 있으며
 추가로 적용하고자하는 단어를 입력해주시면 됩니다.
 
