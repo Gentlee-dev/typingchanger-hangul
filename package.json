@@ -1,7 +1,7 @@
 {
   "name": "typingchanger-hangul",
-  "version": "1.0.0",
-  "description": "한영키를 잊었을때를 위한<br>\r 한글 => 영어, 영어 => 한글 변경<br>\r 두벌식 기준<br>",
+  "version": "1.0.1",
+  "description": "한영키를 잊었을때를 위한\r 한글 => 영어, 영어 => 한글 변경\r 두벌식 기준",
   "main": "./dist/index.js",
   "type": "module",
   "scripts": {
@@ -10,7 +10,16 @@
     "build": "tsc --build",
     "build-watch": "tsc --build -w"
   },
-  "keywords": [],
+  "keywords": [
+    "typing",
+    "typingchanger",
+    "kr",
+    "en"
+  ],
+  "files": [
+    "dist/**"
+  ],
+  "types": "./dist/index.d.ts",
   "author": {
     "name": "gentlee",
     "email": "gentlee.dev@gmail.com"
