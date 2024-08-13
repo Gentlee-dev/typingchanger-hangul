@@ -1,10 +1,10 @@
-import { assemble, disassemble } from "./com.js";
+import { assemble, disassemble } from "./com";
 import {
   ALWAYS_CONVERT_KRS,
   EN_TO_KR,
   EXCEPT_WORDS,
   KR_TO_EN,
-} from "./contant.js";
+} from "./contant";
 
 const getIsAlwaysConvertKr = (word: string, alwaysConvertList: string[]) =>
   [...ALWAYS_CONVERT_KRS, ...alwaysConvertList].indexOf(word) !== -1;
@@ -87,5 +87,3 @@ const forgotConvert = (
 };
 
 export default forgotConvert;
-
-forgotConvert("dkssud!!!! (akssktj), qksrkdnj. skfkd clsgowlwl dksgdmffo?");

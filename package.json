@@ -1,6 +1,6 @@
 {
   "name": "typingchanger-hangul",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "한영키를 잊었을때를 위한\r 한글 => 영어, 영어 => 한글 변경\r 두벌식 기준",
   "main": "./dist/index.js",
   "type": "module",
@@ -19,7 +19,7 @@
   "files": [
     "dist/**"
   ],
-  "types": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "author": {
     "name": "gentlee",
     "email": "gentlee.dev@gmail.com"
